@@ -135,7 +135,7 @@ plotter.add_mesh(
 	scalars="calor",
 	cmap="hot",
 	clim=[minimo, maximo],
-	opacity=[0.0, 1.0, 1.0],
+	opacity=[0.0, 1.0],
 	scalar_bar_args=barra
 	)
 	
