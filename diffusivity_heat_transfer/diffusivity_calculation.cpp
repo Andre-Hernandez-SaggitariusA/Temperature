@@ -14,7 +14,7 @@ int xyz(int Nx, int Ny, int Nz, int i, int j, int k){
 	return ijk;
 }
 
-py::array_t<double> actualizar(int Nx, int Ny, int Nz, double px, double py, double pz, py::array_t<double> u_py, py::array_t<double> u_new_py, int hilos){
+void actualizar(int Nx, int Ny, int Nz, double px, double py, double pz, py::array_t<double> u_py, py::array_t<double> u_new_py, int hilos){
 		
 	py::buffer_info u_new_b = u_new_py.request();
 	py::buffer_info u_b = u_py.request();
@@ -426,7 +426,6 @@ py::array_t<double> actualizar(int Nx, int Ny, int Nz, double px, double py, dou
 	
 	pybind11::gil_scoped_acquire acquire;
 	
-	return u_new_py;
 }
 
 PYBIND11_MODULE(difusividad, m) {

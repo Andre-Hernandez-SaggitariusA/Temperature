@@ -4,7 +4,7 @@
 
 import numpy as np
 import pyvista as pv
-import difusividad as difu
+import difusividad
 import time
 
 # Parámetros físicos
@@ -17,9 +17,9 @@ alpha = 2.2e-5
 
 # Partición de malla
 
-Nx = 70
-Ny = 70
-Nz = 70
+Nx = 50
+Ny = 50
+Nz = 50
 
 dx = Lx / Nx
 dy = Ly / Ny
@@ -65,17 +65,16 @@ def aplicar_calor(u,t):
 snapshots = []
 tiempos = []
 
-u_new = np.copy(u)
-
 t0 = time.perf_counter()
 
 for n in range(int(t_final/dt) + 1):
 
-	# Guardar snapshots
-
 	# Aplicar calor
 	
 	aplicar_calor(u,n*dt)
+
+	# Guardar snapshots
+
 
 	if n % snapshot_interval == 0 :
 		snapshots.append(np.copy(u))
@@ -83,7 +82,9 @@ for n in range(int(t_final/dt) + 1):
 
 	# Actualizar la matriz con funcion de calor.cpp
 	
-	u = difu.actualizar(Nx, Ny, Nz, px, py, pz, u, u_new, hilos)
+	difusividad.actualizar(Nx, Ny, Nz, px, py, pz, u, u_new, hilos)
+
+	u, u_new = u_new, u
 
 t1 = time.perf_counter()
 
